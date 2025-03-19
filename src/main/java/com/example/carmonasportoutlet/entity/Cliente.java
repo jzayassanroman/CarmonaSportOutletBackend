@@ -34,9 +34,9 @@ public class Cliente {
     @Column(nullable = false, length = 100)
     private String direccion;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private User usuario;
+//    @ManyToOne
+//    @JoinColumn(name = "id_usuario", nullable = false)
+//    private User usuario;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Pedido> pedidos;

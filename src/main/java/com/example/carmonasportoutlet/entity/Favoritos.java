@@ -17,9 +17,9 @@ public class Favoritos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private User usuario;
+//    @ManyToOne
+//    @JoinColumn(name = "id_usuario", nullable = false)
+//    private User usuario;
 
     @ManyToOne
     @JoinColumn(name = "id_producto", nullable = false)

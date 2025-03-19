@@ -1,7 +1,5 @@
 package com.example.carmonasportoutlet.entity;
 
-import com.example.carmonasportoutlet.entity.Pedido;
-import com.example.carmonasportoutlet.entity.Producto;
 import jakarta.persistence.*;
 import lombok.*;
 
