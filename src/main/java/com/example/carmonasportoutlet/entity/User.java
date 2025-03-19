@@ -18,8 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Builder
-@Table(name = "usuario", schema = "carmonasportoutlet")
+@Table(name = "usuario", schema = "carmonasportoutlet", catalog = "postgres")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +50,34 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.name()));
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setIsVerified(boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
     @Override

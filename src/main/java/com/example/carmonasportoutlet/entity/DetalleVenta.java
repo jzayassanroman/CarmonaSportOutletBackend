@@ -13,7 +13,7 @@ import lombok.*;
 @EqualsAndHashCode
 @Entity
 @Builder
-@Table(name = "detalle_venta", schema = "carmonasportoutlet")
+@Table(name = "detalle_venta", schema = "carmonasportoutlet", catalog = "postgres")
 public class DetalleVenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

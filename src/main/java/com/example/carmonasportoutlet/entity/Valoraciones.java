@@ -15,7 +15,7 @@ import java.util.Date;
 @EqualsAndHashCode
 @Entity
 @Builder
-@Table(name = "valoraciones", schema = "carmonasportoutlet")
+@Table(name = "valoraciones", schema = "carmonasportoutlet", catalog = "postgres")
 public class Valoraciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
