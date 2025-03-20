@@ -53,6 +53,9 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(rol.name()));
     }
 
+    private String generateVerificationCode() {
+        return UUID.randomUUID().toString().replaceAll("[^A-Z0-9]", "").substring(0, 5);
+    }
 
 
     public String getVerificationToken() {
