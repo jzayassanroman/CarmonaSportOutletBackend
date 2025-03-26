@@ -2,6 +2,7 @@ package com.example.carmonasportoutlet.security;
 
 import com.example.carmonasportoutlet.entity.User;
 import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,14 +10,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private final UsuarioRepository usuarioRepository;
-
-    @Autowired
-    public CustomUserDetailService(UsuarioRepository userRepository) {
-        this.usuarioRepository = userRepository;
-    }
+    private UsuarioRepository usuarioRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

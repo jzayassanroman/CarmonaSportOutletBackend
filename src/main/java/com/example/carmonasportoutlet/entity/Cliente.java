@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Getter
-
 @Setter
 @ToString
 @AllArgsConstructor
@@ -37,7 +36,7 @@ public class Cliente {
     @Column(nullable = false, length = 100)
     private String direccion;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private User usuario;
 

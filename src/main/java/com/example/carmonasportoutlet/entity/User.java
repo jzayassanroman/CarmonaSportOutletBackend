@@ -43,9 +43,6 @@ public class User implements UserDetails {
     private Rol rol;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Cliente> clientes;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Favoritos> favoritos;
 
     @Override
