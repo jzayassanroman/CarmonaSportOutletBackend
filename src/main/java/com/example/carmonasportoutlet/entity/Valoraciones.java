@@ -32,8 +32,8 @@ public class Valoraciones {
     private Integer estrellas;
 
     @ManyToOne
-    @JoinColumn(name = "id_producto", nullable = false)
-    private Producto producto;
+    @JoinColumn(name = "id_cliente_valorado", nullable = false)
+    private Cliente clienteValorado;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)

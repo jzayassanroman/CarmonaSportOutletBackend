@@ -42,8 +42,6 @@ public class User implements UserDetails {
     @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Favoritos> favoritos;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

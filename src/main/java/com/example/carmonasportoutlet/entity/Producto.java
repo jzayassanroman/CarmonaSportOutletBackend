@@ -45,11 +45,12 @@ public class Producto {
     @Column(length = 300)
     private String imagen4;
 
-    @Column(nullable = false, length = 100)
+    @Enumerated(EnumType.STRING)
     private Entrega entrega;
 
-    @Column(nullable = false, length = 50)
+    @Enumerated(EnumType.STRING)
     private EstadoProducto estado;
+
 
     @Column(nullable = false, length = 50)
     private boolean disponible;
@@ -60,14 +61,7 @@ public class Producto {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<Valoraciones> valoraciones;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<PedidoProducto> pedidoProductos;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<DetalleVenta> detalleVentas;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<Favoritos> favoritos;
