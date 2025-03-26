@@ -1,7 +1,7 @@
-package com.example.carmonasportoutlet.Services;
+package com.example.carmonasportoutlet.Servicio;
 
-import com.example.carmonasportoutlet.Repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.Repositorios.ProductoRepository;
+import com.example.carmonasportoutlet.Repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.Producto;
 import lombok.AllArgsConstructor;

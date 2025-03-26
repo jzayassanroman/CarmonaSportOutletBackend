@@ -3,7 +3,7 @@ package com.example.carmonasportoutlet.controladores;
 import com.example.carmonasportoutlet.Servicio.UserService;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.User;
-import com.example.carmonasportoutlet.repositorios.ClienteRepository;
+import com.example.carmonasportoutlet.Repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
 import com.example.carmonasportoutlet.security.JwtService;
 import com.example.carmonasportoutlet.security.LoginRequest;

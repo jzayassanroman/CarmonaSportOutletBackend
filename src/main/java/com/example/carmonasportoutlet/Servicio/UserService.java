@@ -2,7 +2,7 @@ package com.example.carmonasportoutlet.Servicio;
 
 import com.example.carmonasportoutlet.email.EmailService;
 import com.example.carmonasportoutlet.entity.Cliente;
-import com.example.carmonasportoutlet.repositorios.ClienteRepository;
+import com.example.carmonasportoutlet.Repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.security.RegistroRequest;
 import com.example.carmonasportoutlet.entity.User;
 import com.example.carmonasportoutlet.enumerados.Rol;

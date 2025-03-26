@@ -1,6 +1,6 @@
-package com.example.carmonasportoutlet.Controller;
+package com.example.carmonasportoutlet.controladores;
 
-import com.example.carmonasportoutlet.Services.ProductoService;
+import com.example.carmonasportoutlet.Servicio.ProductoService;
 import com.example.carmonasportoutlet.entity.Producto;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

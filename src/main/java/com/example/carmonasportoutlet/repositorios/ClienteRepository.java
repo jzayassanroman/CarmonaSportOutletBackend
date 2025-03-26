@@ -1,4 +1,4 @@
-package com.example.carmonasportoutlet.repositorios;
+package com.example.carmonasportoutlet.Repositorios;
 
 import com.example.carmonasportoutlet.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
