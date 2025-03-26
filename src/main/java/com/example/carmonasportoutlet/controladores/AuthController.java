@@ -51,7 +51,7 @@ public class AuthController {
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
         } catch (Exception e) {
-            e.printStackTrace();  // Imprime el stack trace del error
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el login");
         }
     }
