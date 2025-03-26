@@ -11,7 +11,7 @@ import lombok.*;
 @EqualsAndHashCode
 @Entity
 @Builder
-@Table(name = "pedido_producto", schema = "carmonasportoutlet")
+@Table(name = "pedido_producto", schema = "carmonasportoutlet", catalog = "postgres")
 public class PedidoProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

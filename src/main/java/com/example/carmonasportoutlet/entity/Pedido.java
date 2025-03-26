@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Builder
-@Table(name = "pedido", schema = "carmonasportoutlet")
+@Table(name = "pedido", schema = "carmonasportoutlet", catalog = "postgres")
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
