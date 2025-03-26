@@ -54,20 +54,9 @@ public class Producto {
     @Column(nullable = false, length = 50)
     private boolean disponible;
 
-
-
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<Valoraciones> valoraciones;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<PedidoProducto> pedidoProductos;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<DetalleVenta> detalleVentas;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<Favoritos> favoritos;
