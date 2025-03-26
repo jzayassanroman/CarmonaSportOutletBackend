@@ -2,6 +2,7 @@ package com.example.carmonasportoutlet.entity;
 
 import com.example.carmonasportoutlet.enumerados.Entrega;
 import com.example.carmonasportoutlet.enumerados.EstadoProducto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -58,16 +59,8 @@ public class Producto {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
+    @JsonIgnore
     private Cliente cliente;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<Valoraciones> valoraciones;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<PedidoProducto> pedidoProductos;
-
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<DetalleVenta> detalleVentas;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<Favoritos> favoritos;

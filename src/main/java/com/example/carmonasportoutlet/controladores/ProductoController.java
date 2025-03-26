@@ -21,4 +21,18 @@ public class ProductoController {
         Producto producto = productoServicio.crearProducto(productoDTO);
         return ResponseEntity.ok(producto);
     }
+
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Producto> editarProducto(@PathVariable Integer id, @RequestBody ProductoDTO productoDTO) {
+        Producto producto = productoServicio.editarProducto(id, productoDTO);
+        return ResponseEntity.ok(producto);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Integer id) {
+        productoServicio.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

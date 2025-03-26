@@ -39,4 +39,36 @@ public class ProductoServicio {
 
         return productoRepository.save(producto);
     }
+
+
+    public Producto editarProducto(Integer id, ProductoDTO dto) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        Cliente cliente = clienteRepository.findById(dto.getIdCliente())
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+        producto.setNombre(dto.getNombre());
+        producto.setTipo(dto.getTipo());
+        producto.setDescripcion(dto.getDescripcion());
+        producto.setPrecio(dto.getPrecio());
+        producto.setImagen1(dto.getImagen1());
+        producto.setImagen2(dto.getImagen2());
+        producto.setImagen3(dto.getImagen3());
+        producto.setImagen4(dto.getImagen4());
+        producto.setEntrega(dto.getEntrega());
+        producto.setEstado(dto.getEstado());
+        producto.setDisponible(dto.isDisponible());
+        producto.setCliente(cliente);
+
+        return productoRepository.save(producto);
+    }
+
+    public void eliminarProducto(Integer id) {
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        productoRepository.delete(producto);
+    }
+
 }
