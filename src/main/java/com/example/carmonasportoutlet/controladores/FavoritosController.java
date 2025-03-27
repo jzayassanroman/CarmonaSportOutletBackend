@@ -3,6 +3,7 @@ package com.example.carmonasportoutlet.controladores;
 import com.example.carmonasportoutlet.DTO.FavoritosDTO;
 import com.example.carmonasportoutlet.entity.Favoritos;
 import com.example.carmonasportoutlet.Servicio.FavoritosService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,21 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/favoritos")
 public class FavoritosController {
 
-    private final FavoritosService favoritosService;
+    private  FavoritosService favoritosService;
 
-    public FavoritosController(FavoritosService favoritosService) {
-        this.favoritosService = favoritosService;
-    }
 
     @PostMapping
-    public ResponseEntity<Favoritos> agregarFavorito(@RequestBody Favoritos favorito) {
-        return ResponseEntity.ok(favoritosService.agregarFavorito(favorito));
+    @RequestMapping("/crear")
+    public ResponseEntity<FavoritosDTO> agregarFavorito(@RequestBody Favoritos favorito) {
+        FavoritosDTO favoritoGuardado = favoritosService.agregarFavorito(favorito);
+        return ResponseEntity.ok(favoritoGuardado);
     }
 
-    @GetMapping
+
+    @GetMapping("/all")
     public ResponseEntity<List<FavoritosDTO>> listarFavoritos() {
         return ResponseEntity.ok(favoritosService.listarFavoritos());
     }
@@ -35,7 +37,7 @@ public class FavoritosController {
         return favorito.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarFavorito(@PathVariable Integer id) {
         favoritosService.eliminarFavorito(id);
         return ResponseEntity.noContent().build();

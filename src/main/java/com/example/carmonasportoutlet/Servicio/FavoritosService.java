@@ -3,6 +3,7 @@ package com.example.carmonasportoutlet.Servicio;
 import com.example.carmonasportoutlet.DTO.FavoritosDTO;
 import com.example.carmonasportoutlet.entity.Favoritos;
 import com.example.carmonasportoutlet.repositorios.FavoritosRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,17 +11,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class FavoritosService {
 
-    private final FavoritosRepository favoritosRepository;
+    private  FavoritosRepository favoritosRepository;
 
-    public FavoritosService(FavoritosRepository favoritosRepository) {
-        this.favoritosRepository = favoritosRepository;
+
+    public FavoritosDTO agregarFavorito(Favoritos favorito) {
+        Favoritos nuevoFavorito = favoritosRepository.save(favorito);
+        return new FavoritosDTO(nuevoFavorito.getId(),
+                nuevoFavorito.getUsuario().getId(),
+                nuevoFavorito.getProducto().getId());
     }
 
-    public Favoritos agregarFavorito(Favoritos favorito) {
-        return favoritosRepository.save(favorito);
-    }
 
     public List<FavoritosDTO> listarFavoritos() {
         List<Favoritos> favoritos = favoritosRepository.findAll();

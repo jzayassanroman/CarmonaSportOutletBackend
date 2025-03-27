@@ -2,6 +2,7 @@ package com.example.carmonasportoutlet.controladores;
 
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.Servicio.ClienteService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,21 +10,19 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/clientes")
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    private  ClienteService clienteService;
 
-    public ClienteController(ClienteService clienteService) {
-        this.clienteService = clienteService;
-    }
 
-    @PostMapping
+    @PostMapping("/crear")
     public ResponseEntity<Cliente> crearCliente(@RequestBody Cliente cliente) {
         return ResponseEntity.ok(clienteService.crearCliente(cliente));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Cliente>> listarClientes() {
         return ResponseEntity.ok(clienteService.listarClientes());
     }
@@ -34,12 +33,12 @@ public class ClienteController {
         return cliente.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<Cliente> editarCliente(@PathVariable Integer id, @RequestBody Cliente cliente) {
         return ResponseEntity.ok(clienteService.editarCliente(id, cliente));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Integer id) {
         clienteService.eliminarCliente(id);
         return ResponseEntity.noContent().build();

@@ -2,19 +2,18 @@ package com.example.carmonasportoutlet.Servicio;
 
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class ClienteService {
 
-    private final ClienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
 
     public Cliente crearCliente(Cliente cliente) {
         return clienteRepository.save(cliente);

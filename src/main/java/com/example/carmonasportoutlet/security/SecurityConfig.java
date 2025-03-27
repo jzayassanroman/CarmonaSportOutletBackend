@@ -36,7 +36,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/clientes/**").permitAll()
-                        .requestMatchers("/favoritos/**").permitAll()// Permite acceso sin autenticación a /auth/login y /auth/register
+                        .requestMatchers("/favoritos/**").permitAll()
+                        .requestMatchers("/pedidos/**").permitAll()
+                        .requestMatchers("/valoraciones/**").permitAll()// Permite acceso sin autenticación a /auth/login y /auth/register
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Evita sesiones en JWT
