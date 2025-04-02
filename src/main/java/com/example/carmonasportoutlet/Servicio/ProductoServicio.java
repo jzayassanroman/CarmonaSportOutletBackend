@@ -8,6 +8,8 @@ import com.example.carmonasportoutlet.repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.repositorios.ProductoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductoServicio {
     private  ProductoRepository productoRepository;
@@ -18,6 +20,9 @@ public class ProductoServicio {
         this.clienteRepository = clienteRepository;
     }
 
+    public List<Producto> getAllProductos() {
+        return productoRepository.findAll();
+    }
     public Producto crearProducto(ProductoDTO dto) {
         Cliente cliente = clienteRepository.findById(dto.getIdCliente())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));

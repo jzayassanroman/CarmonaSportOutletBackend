@@ -7,6 +7,8 @@ import com.example.carmonasportoutlet.Servicio.ProductoServicio;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/productos")
 public class ProductoController {
@@ -14,6 +16,12 @@ public class ProductoController {
 
     public ProductoController(ProductoServicio productoServicio) {
         this.productoServicio = productoServicio;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Producto>> getAllProductos() {
+        List<Producto> productos = productoServicio.getAllProductos();
+        return ResponseEntity.ok(productos);
     }
 
     @PostMapping
