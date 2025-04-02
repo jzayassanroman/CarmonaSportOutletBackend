@@ -46,16 +46,16 @@ public class Producto {
     @Column(length = 300)
     private String imagen4;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 100)
     private Entrega entrega;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private EstadoProducto estado;
 
     @Column(nullable = false, length = 50)
     private boolean disponible;
-
-
 
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
