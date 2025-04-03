@@ -39,7 +39,5 @@ public class Valoraciones {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "id_cliente_valorado", nullable = false)
-    private Cliente clienteValorado;
+
 }
