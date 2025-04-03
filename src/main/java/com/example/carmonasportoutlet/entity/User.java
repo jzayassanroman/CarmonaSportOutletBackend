@@ -10,10 +10,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "password")
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
@@ -41,16 +42,21 @@ public class User implements UserDetails {
     @Column(name = "rol", nullable = false)
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Cliente> clientes;
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Favoritos> favoritos;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.name()));
     }
+
+    private String generateVerificationCode() {
+        return UUID.randomUUID().toString().replaceAll("[^A-Z0-9]", "").substring(0, 5);
+    }
+
+
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+
 
     public void setUsername(String username) {
         this.username = username;
@@ -60,7 +66,7 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setIsVerified(boolean isVerified) {
+    public void setIsVerified(Boolean  isVerified) {
         this.isVerified = isVerified;
     }
 
@@ -98,5 +104,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+
+    public boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(boolean isVerified) {
+        this.isVerified = isVerified;
     }
 }
