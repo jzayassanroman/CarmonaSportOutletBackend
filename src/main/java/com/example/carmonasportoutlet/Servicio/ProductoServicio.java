@@ -1,6 +1,7 @@
 package com.example.carmonasportoutlet.Servicio;
 
 
+import com.example.carmonasportoutlet.dto.ProductoClienteDTO;
 import com.example.carmonasportoutlet.dto.ProductoDTO;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.Producto;
@@ -9,6 +10,7 @@ import com.example.carmonasportoutlet.repositorios.ProductoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductoServicio {
@@ -23,6 +25,7 @@ public class ProductoServicio {
     public List<Producto> getAllProductos() {
         return productoRepository.findAll();
     }
+
     public Producto crearProducto(ProductoDTO dto) {
         Cliente cliente = clienteRepository.findById(dto.getIdCliente())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
@@ -74,6 +77,18 @@ public class ProductoServicio {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
         productoRepository.delete(producto);
+    }
+
+
+    public List<ProductoClienteDTO> obtenerProductosPorCliente(Integer clienteId) {
+        List<Producto> productos = productoRepository.findByCliente_Id(clienteId);
+        return productos.stream()
+                .map(p -> new ProductoClienteDTO(
+                        p.getId(), p.getNombre(), p.getTipo(), p.getDescripcion(), p.getPrecio(),
+                        p.getImagen1(), p.getImagen2(), p.getImagen3(), p.getImagen4(),
+                        p.getEntrega().toString(), p.getEstado().toString(), p.isDisponible()
+                ))
+                .collect(Collectors.toList());
     }
 
 }

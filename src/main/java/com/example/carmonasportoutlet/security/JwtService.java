@@ -1,13 +1,17 @@
 package com.example.carmonasportoutlet.security;
 
+import com.example.carmonasportoutlet.entity.Cliente;
+import com.example.carmonasportoutlet.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +21,7 @@ import java.util.function.Function;
 public class JwtService {
 
     // Generar una clave secreta de 256 bits para HS256
-    private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Usa la clave segura de 256 bits
+    private final String SECRET_KEY = "nbtVzcwf2LYx4KprkEQgUNP8T9jHdGXZWCJDqu3Rmye7v6S5FB"; // Usa la clave segura de 256 bits
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -37,10 +41,19 @@ public class JwtService {
 
     }
 
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails.getUsername());
+    public String generateToken(User user, Cliente cliente) {
+        return Jwts.builder()
+                .claim("userId", user.getId())
+                .claim("clienteId", cliente.getId())
+                .setSubject(user.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
+                .signWith(getSignInKey())  // Usar la clave segura para firmar
+                .compact();
     }
+
+
+
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
@@ -48,7 +61,7 @@ public class JwtService {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
-                .signWith(SECRET_KEY)  // Usar la clave segura para firmar
+                .signWith(getSignInKey())  // Usar la clave segura para firmar
                 .compact();
     }
 
@@ -59,5 +72,10 @@ public class JwtService {
 
     private boolean isTokenExpired(String token) {
         return extractClaim(token, Claims::getExpiration).before(new Date());
+    }
+
+    private Key getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 }

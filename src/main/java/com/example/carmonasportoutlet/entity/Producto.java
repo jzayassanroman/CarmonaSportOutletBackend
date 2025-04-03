@@ -46,11 +46,11 @@ public class Producto {
     @Column(length = 300)
     private String imagen4;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, length = 100)
     private Entrega entrega;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false, length = 50)
     private EstadoProducto estado;
 

@@ -43,7 +43,14 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
             );
             UserDetails user = userDetailsService.loadUserByUsername(loginRequest.getUsername());
-            String token = jwtService.generateToken(user);
+            User usuario = usuarioRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+
+            // Obtener el cliente asociado al usuario
+            Cliente cliente = clienteRepository.findByUsuario(usuario)
+                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+            // Generar el token incluyendo el clienteId
+            String token = jwtService.generateToken(usuario, cliente);
 
             return ResponseEntity.ok(Map.of("token", token));
         } catch (BadCredentialsException e) {
@@ -55,6 +62,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el login");
         }
     }
+
 
 
 
