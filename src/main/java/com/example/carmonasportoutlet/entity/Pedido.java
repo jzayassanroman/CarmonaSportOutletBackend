@@ -34,8 +34,8 @@ public class Pedido {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<PedidoProducto> pedidoProductos;
-
+    @OneToOne
+    @JoinColumn(name = "id_producto", nullable = false)
+    private Producto producto;
 
 }
