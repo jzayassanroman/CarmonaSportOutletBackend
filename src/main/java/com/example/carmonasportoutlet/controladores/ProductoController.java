@@ -1,8 +1,8 @@
 package com.example.carmonasportoutlet.controladores;
 
 
-import com.example.carmonasportoutlet.dto.ProductoClienteDTO;
-import com.example.carmonasportoutlet.dto.ProductoDTO;
+import com.example.carmonasportoutlet.DTO.ProductoClienteDTO;
+import com.example.carmonasportoutlet.DTO.ProductoDTO;
 import com.example.carmonasportoutlet.entity.Producto;
 import com.example.carmonasportoutlet.Servicio.ProductoServicio;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +20,8 @@ public class ProductoController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Producto>> getAllProductos() {
-        List<Producto> productos = productoServicio.getAllProductos();
+    public ResponseEntity<List<ProductoDTO>> getAllProductos() {
+        List<ProductoDTO> productos = productoServicio.getAllProductos();
         return ResponseEntity.ok(productos);
     }
 
@@ -32,10 +32,11 @@ public class ProductoController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<Producto> editarProducto(@PathVariable Integer id, @RequestBody ProductoDTO productoDTO) {
-        Producto producto = productoServicio.editarProducto(id, productoDTO);
-        return ResponseEntity.ok(producto);
+    public ResponseEntity<Void> editarProducto(@PathVariable Integer id, @RequestBody ProductoDTO productoDTO) {
+        productoServicio.editarProducto(id, productoDTO);
+        return ResponseEntity.ok().build();
     }
+
 
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarProducto(@PathVariable Integer id) {

@@ -1,4 +1,4 @@
-package com.example.carmonasportoutlet.dto;
+package com.example.carmonasportoutlet.DTO;
 
 
 import com.example.carmonasportoutlet.enumerados.Entrega;
@@ -9,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductoDTO {
+    private Integer id;
     private String nombre;
     private String tipo;
     private String descripcion;

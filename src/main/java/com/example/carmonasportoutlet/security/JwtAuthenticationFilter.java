@@ -1,5 +1,6 @@
 package com.example.carmonasportoutlet.security;
 
+import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,44 +37,50 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 protected void doFilterInternal(HttpServletRequest request,
                                 HttpServletResponse response,
                                 FilterChain filterChain) throws ServletException, IOException {
-    String requestPath = request.getServletPath();
+    try {
+        String requestPath = request.getServletPath();
 
-    // EXCLUIR rutas públicas del filtro JWT
-    if (requestPath.equals("/auth/register") || requestPath.equals("/auth/login")) {
-        logger.info("Skipping JWT filter for: " + requestPath);
-        filterChain.doFilter(request, response);
-        return;
-    }
-
-    String authHeader = request.getHeader("Authorization");
-
-    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-        logger.info("No Bearer token found in the request.");
-        filterChain.doFilter(request, response);
-        return;
-    }
-
-    String token = authHeader.substring(7);
-    String username = jwtService.extractUsername(token);
-
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-        logger.info("Attempting to authenticate user: " + username);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-        if (jwtService.isTokenValid(token, userDetails)) {
-            logger.info("Token is valid, setting authentication.");
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
-
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-        } else {
-            logger.warn("Token is not valid.");
+        // EXCLUIR rutas públicas del filtro JWT
+        if (requestPath.equals("/auth/register") || requestPath.equals("/auth/login")) {
+            logger.info("Skipping JWT filter for: " + requestPath);
+            filterChain.doFilter(request, response);
+            return;
         }
-    }
 
-    filterChain.doFilter(request, response);
+        String authHeader = request.getHeader("Authorization");
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            logger.info("No Bearer token found in the request.");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String token = authHeader.substring(7);
+        String username = jwtService.extractUsername(token);
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            logger.info("Attempting to authenticate user: " + username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+            if (jwtService.isTokenValid(token, userDetails)) {
+                logger.info("Token is valid, setting authentication.");
+                UsernamePasswordAuthenticationToken authToken =
+                        new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
+
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else {
+                logger.warn("Token is not valid.");
+            }
+        }
+
+        filterChain.doFilter(request, response);
+    } catch (MalformedJwtException e) {
+        logger.error("Malformed JWT token: " + e.getMessage());
+        response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT token");
+        return;
+    }
 }
 
 }
