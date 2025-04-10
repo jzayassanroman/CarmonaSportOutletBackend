@@ -38,7 +38,8 @@ public class ProductoServicio {
                     dto.setEntrega(producto.getEntrega());
                     dto.setEstado(producto.getEstado());
                     dto.setDisponible(producto.isDisponible());
-                    dto.setIdCliente(producto.getCliente().getId()); // Suponiendo que hay una relación con Cliente
+                    dto.setIdCliente(producto.getCliente().getId());
+                    dto.setNombreCliente(producto.getCliente().getNombre()); // Asignar el nombre del cliente
                     return dto;
                 })
                 .collect(Collectors.toList());
