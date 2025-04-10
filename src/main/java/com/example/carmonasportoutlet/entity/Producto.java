@@ -2,6 +2,7 @@ package com.example.carmonasportoutlet.entity;
 
 import com.example.carmonasportoutlet.enumerados.Entrega;
 import com.example.carmonasportoutlet.enumerados.EstadoProducto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,23 +46,21 @@ public class Producto {
     @Column(length = 300)
     private String imagen4;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false, length = 100)
     private Entrega entrega;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false, length = 50)
     private EstadoProducto estado;
-
 
     @Column(nullable = false, length = 50)
     private boolean disponible;
 
-
-
     @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
+    @JsonIgnore
     private Cliente cliente;
-
-
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<Favoritos> favoritos;
