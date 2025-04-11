@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     List<Producto> findByCliente_Id(Integer clienteId);
+
 }
 

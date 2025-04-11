@@ -56,6 +56,7 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests(req -> req.requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/productos/**").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

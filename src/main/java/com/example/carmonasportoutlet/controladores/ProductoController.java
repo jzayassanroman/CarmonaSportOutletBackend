@@ -3,6 +3,7 @@ package com.example.carmonasportoutlet.controladores;
 
 import com.example.carmonasportoutlet.dto.ProductoClienteDTO;
 import com.example.carmonasportoutlet.dto.ProductoDTO;
+import com.example.carmonasportoutlet.dto.ProductoResponseDTO;
 import com.example.carmonasportoutlet.entity.Producto;
 import com.example.carmonasportoutlet.Servicio.ProductoServicio;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,14 @@ public class ProductoController {
         List<ProductoClienteDTO> productos = productoServicio.obtenerProductosPorCliente(clienteId);
         return ResponseEntity.ok(productos);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductoResponseDTO> getProductoPorId(@PathVariable Integer id) {
+        ProductoResponseDTO productoResponseDTO = productoServicio.getProductoPorId(id);
+        return ResponseEntity.ok(productoResponseDTO);
+    }
+
+
 
 
 
