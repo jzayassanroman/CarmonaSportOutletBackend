@@ -2,6 +2,7 @@ package com.example.carmonasportoutlet.Servicio;
 
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
+import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class ClienteService {
 
     private ClienteRepository clienteRepository;
+    private UsuarioRepository usuarioRepository;
 
 
     public Cliente crearCliente(Cliente cliente) {
@@ -35,10 +37,18 @@ public class ClienteService {
                     cliente.setEmail(clienteActualizado.getEmail());
                     cliente.setTelefono(clienteActualizado.getTelefono());
                     cliente.setDireccion(clienteActualizado.getDireccion());
+
+                    // 🆕 Editar el username si se ha enviado uno nuevo
+                    if (cliente.getUsuario() != null && clienteActualizado.getUsuario() != null) {
+                        cliente.getUsuario().setUsername(clienteActualizado.getUsuario().getUsername());
+                        usuarioRepository.save(cliente.getUsuario());
+                    }
+
                     return clienteRepository.save(cliente);
                 })
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
     }
+
 
     public void eliminarCliente(Integer id) {
         clienteRepository.deleteById(id);
