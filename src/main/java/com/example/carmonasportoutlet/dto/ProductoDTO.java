@@ -22,4 +22,5 @@ public class ProductoDTO {
     private EstadoProducto estado;
     private boolean disponible;
     private Integer idCliente;
+    private String nombreCliente;
 }
