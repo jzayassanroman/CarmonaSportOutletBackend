@@ -30,7 +30,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@AllArgsConstructor
 public class SecurityConfig {
 
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -55,13 +54,13 @@ public class SecurityConfig {
                     config.setAllowCredentials(true);
                     return config;
                 }))
-                .authorizeHttpRequests(req -> req.requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/productos/**").permitAll()
+                .authorizeHttpRequests(req ->
+                        req.requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/productos/**").permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exception) -> exception.accessDeniedHandler(accessDeniedHandler()));
-
         return http.build();
     }
 
@@ -82,5 +81,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

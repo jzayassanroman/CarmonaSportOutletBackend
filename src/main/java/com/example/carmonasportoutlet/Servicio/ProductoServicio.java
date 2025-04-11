@@ -4,17 +4,24 @@ package com.example.carmonasportoutlet.Servicio;
 import com.example.carmonasportoutlet.dto.ProductoClienteDTO;
 import com.example.carmonasportoutlet.dto.ProductoDTO;
 import com.example.carmonasportoutlet.dto.ProductoResponseDTO;
+import com.example.carmonasportoutlet.DTO.ProductoClienteDTO;
+import com.example.carmonasportoutlet.DTO.ProductoDTO;
+import com.example.carmonasportoutlet.dto.ProductoResponseDTO;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.Producto;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.repositorios.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ProductoServicio {
     private  ProductoRepository productoRepository;
     private  ClienteRepository clienteRepository;
@@ -24,8 +31,28 @@ public class ProductoServicio {
         this.clienteRepository = clienteRepository;
     }
 
-    public List<Producto> getAllProductos() {
-        return productoRepository.findAll();
+
+    public List<ProductoDTO> getAllProductos() {
+        return productoRepository.findAll().stream()
+                .map(producto -> {
+                    ProductoDTO dto = new ProductoDTO();
+                    dto.setId(producto.getId());
+                    dto.setNombre(producto.getNombre());
+                    dto.setTipo(producto.getTipo());
+                    dto.setDescripcion(producto.getDescripcion());
+                    dto.setPrecio(producto.getPrecio());
+                    dto.setImagen1(producto.getImagen1());
+                    dto.setImagen2(producto.getImagen2());
+                    dto.setImagen3(producto.getImagen3());
+                    dto.setImagen4(producto.getImagen4());
+                    dto.setEntrega(producto.getEntrega());
+                    dto.setEstado(producto.getEstado());
+                    dto.setDisponible(producto.isDisponible());
+                    dto.setIdCliente(producto.getCliente().getId());
+                    dto.setNombreCliente(producto.getCliente().getNombre()); // Asignar el nombre del cliente
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
 
     public Producto crearProducto(ProductoDTO dto) {

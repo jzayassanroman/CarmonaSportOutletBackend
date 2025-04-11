@@ -1,4 +1,4 @@
-package com.example.carmonasportoutlet.dto;
+package com.example.carmonasportoutlet.DTO;
 
 
 import lombok.Getter;

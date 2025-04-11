@@ -4,6 +4,7 @@ import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -33,6 +34,9 @@ public class JwtService {
     }
 
     private Claims extractAllClaims(String token) {
+        if (token == null || token.chars().filter(ch -> ch == '.').count() != 2) {
+            throw new MalformedJwtException("JWT strings must contain exactly 2 period characters. Found: " + (token == null ? 0 : token.chars().filter(ch -> ch == '.').count()));
+        }
         return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
                 .build()
