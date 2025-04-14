@@ -1,0 +1,18 @@
+package com.example.carmonasportoutlet.DTO;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTO {
+    private Integer id;
+    private String username;
+    private String rol;
+    private Boolean isVerified;
+
+    private ClienteDTO cliente;
+}
+

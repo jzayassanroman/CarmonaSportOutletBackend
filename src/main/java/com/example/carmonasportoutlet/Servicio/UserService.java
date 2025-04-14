@@ -1,5 +1,7 @@
 package com.example.carmonasportoutlet.Servicio;
 
+import com.example.carmonasportoutlet.DTO.ClienteDTO;
+import com.example.carmonasportoutlet.DTO.UserDTO;
 import com.example.carmonasportoutlet.email.EmailService;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
@@ -14,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -68,5 +72,43 @@ public class UserService {
         }
         return token.toString();
     }
+    public void eliminarUsuarioYCliente(Integer idUsuario) {
+        User user = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Cliente cliente = clienteRepository.findByUsuario_Id(idUsuario);
+        if (cliente != null) {
+            clienteRepository.delete(cliente);
+        }
+
+        usuarioRepository.delete(user);
+    }
+    public List<UserDTO> obtenerUsuarios() {
+        List<User> usuarios = usuarioRepository.findAll();
+
+        return usuarios.stream().map(user -> {
+            UserDTO dto = new UserDTO();
+            dto.setId(user.getId());
+            dto.setUsername(user.getUsername());
+            dto.setRol(user.getRol().name());
+            dto.setIsVerified(user.getIsVerified());
+
+            if (user.getCliente() != null) {
+                Cliente cliente = user.getCliente();
+                ClienteDTO clienteDTO = new ClienteDTO();
+                clienteDTO.setId(cliente.getId());
+                clienteDTO.setNombre(cliente.getNombre());
+                clienteDTO.setApellido(cliente.getApellido());
+                clienteDTO.setEmail(cliente.getEmail());
+                clienteDTO.setDireccion(cliente.getDireccion());
+                clienteDTO.setTelefono(String.valueOf(cliente.getTelefono()));
+
+                dto.setCliente(clienteDTO);
+            }
+
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
 
 }
