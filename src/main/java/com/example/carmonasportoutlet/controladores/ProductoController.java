@@ -1,8 +1,6 @@
 package com.example.carmonasportoutlet.controladores;
 
 
-import com.example.carmonasportoutlet.DTO.ProductoClienteDTO;
-import com.example.carmonasportoutlet.DTO.ProductoDTO;
 import com.example.carmonasportoutlet.dto.ProductoClienteDTO;
 import com.example.carmonasportoutlet.dto.ProductoDTO;
 import com.example.carmonasportoutlet.dto.ProductoResponseDTO;
@@ -19,8 +17,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/productos")
 public class ProductoController {
+
     private final ProductoServicio productoServicio;
-    @Autowired
+
     private final ProductoRepository productoRepository;
 
     public ProductoController(ProductoServicio productoServicio, ProductoRepository productoRepository) {
@@ -34,10 +33,11 @@ public class ProductoController {
         return ResponseEntity.ok(productos);
     }
 
-    @GetMapping("/{id}")
-    public Optional<Producto> getProductoById(@PathVariable Integer id) {
-        return productoRepository.findById(id);
-    }
+//    @GetMapping("/{id}")
+//    public Optional<Producto> getProductoById(@PathVariable Integer id) {
+//
+//        return productoRepository.findById(id);
+//    }
 
     @PostMapping
     public ResponseEntity<Producto> crearProducto(@RequestBody ProductoDTO productoDTO) {

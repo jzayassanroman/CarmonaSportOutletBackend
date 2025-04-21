@@ -1,11 +1,7 @@
 package com.example.carmonasportoutlet.Servicio;
 
-
 import com.example.carmonasportoutlet.dto.ProductoClienteDTO;
 import com.example.carmonasportoutlet.dto.ProductoDTO;
-import com.example.carmonasportoutlet.dto.ProductoResponseDTO;
-import com.example.carmonasportoutlet.DTO.ProductoClienteDTO;
-import com.example.carmonasportoutlet.DTO.ProductoDTO;
 import com.example.carmonasportoutlet.dto.ProductoResponseDTO;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.Producto;
@@ -13,24 +9,16 @@ import com.example.carmonasportoutlet.repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.repositorios.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ProductoServicio {
-    private  ProductoRepository productoRepository;
-    private  ClienteRepository clienteRepository;
-
-    public ProductoServicio(ProductoRepository productoRepository, ClienteRepository clienteRepository) {
-        this.productoRepository = productoRepository;
-        this.clienteRepository = clienteRepository;
-    }
-
+    private ProductoRepository productoRepository;
+    private ClienteRepository clienteRepository;
 
     public List<ProductoDTO> getAllProductos() {
         return productoRepository.findAll().stream()
@@ -49,7 +37,7 @@ public class ProductoServicio {
                     dto.setEstado(producto.getEstado());
                     dto.setDisponible(producto.isDisponible());
                     dto.setIdCliente(producto.getCliente().getId());
-                    dto.setNombreCliente(producto.getCliente().getNombre()); // Asignar el nombre del cliente
+                    dto.setNombreCliente(producto.getCliente().getNombre());
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -76,7 +64,6 @@ public class ProductoServicio {
 
         return productoRepository.save(producto);
     }
-
 
     public Producto editarProducto(Integer id, ProductoDTO dto) {
         Producto producto = productoRepository.findById(id)
@@ -108,7 +95,6 @@ public class ProductoServicio {
         productoRepository.delete(producto);
     }
 
-
     public List<ProductoClienteDTO> obtenerProductosPorCliente(Integer clienteId) {
         List<Producto> productos = productoRepository.findByCliente_Id(clienteId);
         return productos.stream()
@@ -124,9 +110,6 @@ public class ProductoServicio {
         Producto producto = productoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
 
-        // Convertir Producto a ProductoResponseDTO
         return new ProductoResponseDTO(producto);
     }
-
-
 }
