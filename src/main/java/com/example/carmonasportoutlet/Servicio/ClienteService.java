@@ -1,5 +1,6 @@
 package com.example.carmonasportoutlet.Servicio;
 
+import com.example.carmonasportoutlet.dto.ClienteEditarDTO;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
@@ -53,4 +54,36 @@ public class ClienteService {
     public void eliminarCliente(Integer id) {
         clienteRepository.deleteById(id);
     }
+
+    public Cliente editarPerfil(Integer clienteId, ClienteEditarDTO clienteEditarDTO) {
+        Optional<Cliente> clienteOpt = clienteRepository.findById(clienteId);
+        if (clienteOpt.isPresent()) {
+            Cliente cliente = clienteOpt.get();
+
+            Integer telefono = null;
+            try {
+                telefono = Integer.parseInt(clienteEditarDTO.getTelefono());
+            } catch (NumberFormatException e) {
+                // Manejo de error
+            }
+
+            cliente.setNombre(clienteEditarDTO.getNombre());
+            cliente.setApellido(clienteEditarDTO.getApellido());
+            cliente.setEmail(clienteEditarDTO.getEmail());
+            cliente.setTelefono(telefono);
+            cliente.setDireccion(clienteEditarDTO.getDireccion());
+
+            // ✅ Convertimos el enum a número (ordinal)
+            if (clienteEditarDTO.getProvincia() != null) {
+                cliente.setProvincia(clienteEditarDTO.getProvincia().ordinal());
+            }
+
+            return clienteRepository.save(cliente);
+        }
+        return null;
+    }
+
+
+
+
 }

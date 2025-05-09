@@ -16,6 +16,8 @@ import java.util.Objects;
 @Builder
 @Table(name = "cliente", schema = "carmonasportoutlet", catalog = "postgres")
 public class Cliente {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -45,8 +47,21 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Producto> productos;
 
+    @Column(name = "provincia", nullable = false)
+    private Integer provincia;
+
+
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Valoraciones> valoraciones;
+
+    public Integer getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Integer provincia) {
+        this.provincia = provincia;
+    }
 
     public Integer getId() {
         return id;
