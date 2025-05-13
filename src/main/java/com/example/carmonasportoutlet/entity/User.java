@@ -34,6 +34,8 @@ public class User implements UserDetails {
 
     @Column(name = "isverified", nullable = false)
     private Boolean isVerified;
+    @Column(name = "isbanned", nullable = false)
+    private Boolean isBanned;
 
     @Column(name = "verificationtoken", nullable = false, length = 600)
     private String verificationToken;
@@ -41,6 +43,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false)
     private Rol rol;
+
+
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Favoritos> favoritos;

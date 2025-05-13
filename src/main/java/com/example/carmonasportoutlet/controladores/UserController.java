@@ -25,6 +25,19 @@ public class UserController {
         List<UserDTO> usuarios = userService.obtenerUsuarios();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
+    @PutMapping("/ban/{id}")
+    public ResponseEntity<Map<String, String>> banearUsuario(@PathVariable Integer id) {
+        try {
+            userService.banearUsuario(id);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario baneado correctamente.");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.status(404).body(errorResponse);
+        }
+    }
 
     @DeleteMapping("/eliminar/{id}")
 //    @PreAuthorize("hasRole('ADMINISTRADOR')")
