@@ -59,6 +59,8 @@ public class SecurityConfig {
                         .requestMatchers("/productos/**").permitAll()
                         .requestMatchers("/clientes/perfil").permitAll()
                         .requestMatchers("/pedidos/**").permitAll()
+                        .requestMatchers("/pedidos/historial/**").permitAll()
+
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
