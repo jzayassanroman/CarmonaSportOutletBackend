@@ -12,6 +12,7 @@ public class UserDTO {
     private String username;
     private String rol;
     private Boolean isVerified;
+    private Boolean isBanned;
 
     private ClienteDTO cliente;
 }

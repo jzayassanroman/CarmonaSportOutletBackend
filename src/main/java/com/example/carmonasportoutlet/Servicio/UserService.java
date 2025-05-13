@@ -30,6 +30,12 @@ public class UserService {
 
     private EmailService emailService;
 
+    public void banearUsuario(Integer id) {
+        User user = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        user.setIsBanned(true); // Marcar como baneado
+        usuarioRepository.save(user);
+    }
+
     @Transactional
     public String registerUser(RegistroRequest request) {
         if (usuarioRepository.existsByUsername(request.getUsername())) {
