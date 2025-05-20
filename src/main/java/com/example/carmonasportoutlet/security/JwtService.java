@@ -49,6 +49,7 @@ public class JwtService {
         return Jwts.builder()
                 .claim("userId", user.getId())
                 .claim("clienteId", cliente.getId())
+                .claim("rol", user.getRol().name()) // Añadir el rol del usuario como claim
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
