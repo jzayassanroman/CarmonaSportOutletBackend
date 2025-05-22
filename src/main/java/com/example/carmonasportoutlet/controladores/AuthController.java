@@ -5,9 +5,7 @@ import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.entity.User;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
 import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
-import com.example.carmonasportoutlet.security.JwtService;
-import com.example.carmonasportoutlet.security.LoginRequest;
-import com.example.carmonasportoutlet.security.RegistroRequest;
+import com.example.carmonasportoutlet.security.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +17,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-import com.example.carmonasportoutlet.security.VerificationRequest;
 
 import java.util.Map;
 
@@ -36,32 +33,64 @@ public class AuthController {
 
 
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-            );
-            UserDetails user = userDetailsService.loadUserByUsername(loginRequest.getUsername());
-            User usuario = usuarioRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        try {
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+//            );
+//            UserDetails user = userDetailsService.loadUserByUsername(loginRequest.getUsername());
+//            User usuario = usuarioRepository.findByUsername(loginRequest.getUsername()).orElseThrow();
+//
+//            // Obtener el cliente asociado al usuario
+//            Cliente cliente = clienteRepository.findByUsuario(usuario)
+//                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+//
+//            // Generar el token incluyendo el clienteId
+//            String token = jwtService.generateToken(usuario, cliente);
+//
+//            return ResponseEntity.ok(Map.of("token", token));
+//        } catch (BadCredentialsException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+//        } catch (UsernameNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el login");
+//        }
+//    }
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    try {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
 
-            // Obtener el cliente asociado al usuario
-            Cliente cliente = clienteRepository.findByUsuario(usuario)
-                    .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+        User usuario = usuarioRepository.findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-            // Generar el token incluyendo el clienteId
-            String token = jwtService.generateToken(usuario, cliente);
-
-            return ResponseEntity.ok(Map.of("token", token));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
-        } catch (UsernameNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el login");
+        if (usuario.isUserBanned()) {
+            // Aquí devuelves 403 sin lanzar excepción, limpio
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("El usuario está baneado.");
         }
+
+        Cliente cliente = clienteRepository.findByUsuario(usuario)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+        String token = jwtService.generateToken(usuario, cliente);
+
+        return ResponseEntity.ok(Map.of("token", token));
+    } catch (BadCredentialsException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+    } catch (UsernameNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
+    } catch (Exception e) {
+        e.printStackTrace(); // Opcional: puedes comentar esto si no quieres ver nada en consola
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error en el login");
     }
+}
+
+
 
 
 

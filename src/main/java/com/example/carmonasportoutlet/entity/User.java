@@ -34,7 +34,7 @@ public class User implements UserDetails {
 
     @Column(name = "isverified", nullable = false)
     private Boolean isVerified;
-    @Column(name = "isbanned", nullable = false)
+    @Column(name = "isbanned")
     private Boolean isBanned;
 
     @Column(name = "verificationtoken", nullable = false, length = 600)
@@ -62,6 +62,9 @@ public class User implements UserDetails {
         return UUID.randomUUID().toString().replaceAll("[^A-Z0-9]", "").substring(0, 5);
     }
 
+    public boolean isUserBanned() {
+        return Boolean.TRUE.equals(isBanned);
+    }
 
     public String getVerificationToken() {
         return verificationToken;

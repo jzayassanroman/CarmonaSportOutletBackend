@@ -2,6 +2,7 @@ package com.example.carmonasportoutlet.controladores;
 import com.example.carmonasportoutlet.DTO.UserDTO;
 import com.example.carmonasportoutlet.Servicio.UserService;
 import com.example.carmonasportoutlet.entity.User;
+import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping("/all")
 //    @PreAuthorize("hasRole('ADMINISTRADOR')")
@@ -37,6 +40,16 @@ public class UserController {
             errorResponse.put("message", e.getMessage());
             return ResponseEntity.status(404).body(errorResponse);
         }
+    }
+    @PutMapping("/desbanear/{id}")
+    public ResponseEntity<String> desbanearUsuario(@PathVariable Integer id) {
+        User user = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        user.setIsBanned(false);
+        usuarioRepository.save(user);
+
+        return ResponseEntity.ok("Usuario desbaneado exitosamente");
     }
 
     @DeleteMapping("/eliminar/{id}")
