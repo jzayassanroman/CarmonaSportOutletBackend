@@ -41,6 +41,7 @@ public class ChatService {
                         chat.getRemitente().getId(),
                         chat.getDestinatario().getId(),
                         chat.getProducto().getId(),
+                        chat.getProducto().getNombre(), // Asignar el nombre del producto
                         chat.getFechacreacion()
                 ))
                 .collect(Collectors.toList());
