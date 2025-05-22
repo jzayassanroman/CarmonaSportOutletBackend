@@ -1,6 +1,6 @@
 package com.example.carmonasportoutlet.Servicio;
 
-import com.example.carmonasportoutlet.DTO.ValoracionesDTO;
+import com.example.carmonasportoutlet.dto.ValoracionesDTO;
 import com.example.carmonasportoutlet.entity.Valoraciones;
 import com.example.carmonasportoutlet.repositorios.ValoracionesRepository;
 import lombok.AllArgsConstructor;

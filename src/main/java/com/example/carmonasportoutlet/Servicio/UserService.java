@@ -1,7 +1,7 @@
 package com.example.carmonasportoutlet.Servicio;
 
-import com.example.carmonasportoutlet.DTO.ClienteDTO;
-import com.example.carmonasportoutlet.DTO.UserDTO;
+import com.example.carmonasportoutlet.dto.ClienteDTO;
+import com.example.carmonasportoutlet.dto.UserDTO;
 import com.example.carmonasportoutlet.email.EmailService;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.repositorios.ClienteRepository;
@@ -11,13 +11,10 @@ import com.example.carmonasportoutlet.enumerados.Rol;
 import com.example.carmonasportoutlet.repositorios.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service

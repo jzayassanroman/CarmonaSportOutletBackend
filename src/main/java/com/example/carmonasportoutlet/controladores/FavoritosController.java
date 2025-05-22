@@ -1,6 +1,6 @@
 package com.example.carmonasportoutlet.controladores;
 
-import com.example.carmonasportoutlet.DTO.FavoritosDTO;
+import com.example.carmonasportoutlet.dto.FavoritosDTO;
 import com.example.carmonasportoutlet.entity.Favoritos;
 import com.example.carmonasportoutlet.Servicio.FavoritosService;
 import lombok.AllArgsConstructor;

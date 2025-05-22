@@ -1,6 +1,6 @@
 package com.example.carmonasportoutlet.Servicio;
 
-import com.example.carmonasportoutlet.DTO.MensajeDTO;
+import com.example.carmonasportoutlet.dto.MensajeDTO;
 import com.example.carmonasportoutlet.entity.Mensaje;
 import com.example.carmonasportoutlet.repositorios.MensajeRepository;
 import lombok.AllArgsConstructor;
@@ -37,6 +37,19 @@ public class MensajeService {
                 m.getContenido(),
                 m.getFechaenvio()
         )).orElse(null);
+    }
+
+    public List<MensajeDTO> obtenerMensajesPorChat(Integer chatId) {
+        return mensajeRepository.findByChatId(chatId)
+                .stream()
+                .map(m -> new MensajeDTO(
+                        m.getId(),
+                        m.getChat().getId(),
+                        m.getEmisor().getId(),
+                        m.getContenido(),
+                        m.getFechaenvio()
+                ))
+                .collect(Collectors.toList());
     }
 
     public MensajeDTO crearMensaje(Mensaje mensaje) {

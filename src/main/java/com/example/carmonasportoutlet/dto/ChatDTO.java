@@ -1,10 +1,9 @@
-package com.example.carmonasportoutlet.DTO;
+package com.example.carmonasportoutlet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data

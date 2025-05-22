@@ -1,4 +1,4 @@
-package com.example.carmonasportoutlet.DTO;
+package com.example.carmonasportoutlet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,12 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValoracionesDTO {
+
+public class PedidoDTO {
     private Integer id;
-    private String valoracion;
+    private Float total;
+    private String estado;
     private Date fecha;
-    private Integer estrellas;
     private Integer idCliente;
-    private Integer idClienteValorado;
+    private Integer idProducto;
 }

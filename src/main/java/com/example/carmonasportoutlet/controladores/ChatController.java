@@ -1,6 +1,6 @@
 package com.example.carmonasportoutlet.controladores;
 
-import com.example.carmonasportoutlet.DTO.ChatDTO;
+import com.example.carmonasportoutlet.dto.ChatDTO;
 import com.example.carmonasportoutlet.Servicio.ChatService;
 import com.example.carmonasportoutlet.entity.Chat;
 import lombok.AllArgsConstructor;
@@ -30,6 +30,11 @@ public class ChatController {
     @PostMapping("/crear")
     public ResponseEntity<ChatDTO> crearChat(@RequestBody Chat chat) {
         return ResponseEntity.ok(chatService.crearChat(chat));
+    }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<ChatDTO>> obtenerChatsDeUsuario(@PathVariable Integer usuarioId) {
+        return ResponseEntity.ok(chatService.obtenerChatsDeUsuario(usuarioId));
     }
 
     @DeleteMapping("/eliminar/{id}")

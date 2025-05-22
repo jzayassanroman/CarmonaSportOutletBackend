@@ -20,6 +20,7 @@ public class ProductoResponseDTO {
     private String estado;
     private Boolean disponible;
     private String clientName;  // Nombre del cliente
+    private Integer userId;     // ID del usuario dueño del producto
 
     // Constructor que convierte Producto a ProductoResponseDTO
     public ProductoResponseDTO(Producto producto) {
@@ -34,10 +35,14 @@ public class ProductoResponseDTO {
         this.imagen4 = producto.getImagen4();
         this.entrega = producto.getEntrega().name();
         this.estado = producto.getEstado().name();
+
         if (producto.getCliente() != null) {
-            this.clientName = producto.getCliente().getNombre();  // Obtener el nombre del cliente
+            this.clientName = producto.getCliente().getNombre();
+
+            // Añadimos la ID del usuario asociado al cliente
+            if (producto.getCliente().getUsuario() != null) {
+                this.userId = producto.getCliente().getUsuario().getId();
+            }
         }
     }
-
-    // Getters and Setters
 }
