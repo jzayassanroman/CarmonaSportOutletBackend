@@ -1,11 +1,13 @@
 package com.example.carmonasportoutlet.Servicio;
 
+import com.example.carmonasportoutlet.dto.HistorialPedidoDTO;
 import com.example.carmonasportoutlet.dto.PedidoDTO;
 import com.example.carmonasportoutlet.entity.Pedido;
 import com.example.carmonasportoutlet.repositorios.PedidoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -87,5 +89,24 @@ public class PedidoService {
             return true;
         }
         return false;
+    }
+
+    public List<HistorialPedidoDTO> obtenerHistorialPorIdCliente(Integer idCliente) {
+        List<Pedido> pedidos = pedidoRepository.findByClienteId(idCliente);
+
+        List<HistorialPedidoDTO> historial = new ArrayList<>();
+
+        for (Pedido pedido : pedidos) {
+            HistorialPedidoDTO dto = new HistorialPedidoDTO();
+            dto.setIdPedido(pedido.getId());
+            dto.setTotal(pedido.getTotal());
+            dto.setEstado(pedido.getEstado());
+            dto.setFecha(pedido.getFecha());
+            dto.setNombreProducto(pedido.getProducto().getNombre());
+
+            historial.add(dto);
+        }
+
+        return historial;
     }
 }

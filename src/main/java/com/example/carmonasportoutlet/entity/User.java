@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "usuario", schema = "carmonasportoutlet", catalog = "postgres")
+@Table(name = "usuario", schema = "carmonasportoutlet",catalog = "postgres" )
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "rol", nullable = false)
     private Rol rol;
-
 
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)

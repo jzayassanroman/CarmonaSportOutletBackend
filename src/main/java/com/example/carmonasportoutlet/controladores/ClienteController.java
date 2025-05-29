@@ -1,8 +1,14 @@
 package com.example.carmonasportoutlet.controladores;
 
+import com.example.carmonasportoutlet.dto.ClienteEditarDTO;
+import com.example.carmonasportoutlet.dto.ClientePerfilDTO;
 import com.example.carmonasportoutlet.entity.Cliente;
 import com.example.carmonasportoutlet.Servicio.ClienteService;
+import com.example.carmonasportoutlet.enumerados.Provincia;
+import com.example.carmonasportoutlet.repositorios.ClienteRepository;
+import com.example.carmonasportoutlet.security.JwtService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +23,6 @@ public class ClienteController {
     private  ClienteService clienteService;
     private ClienteRepository clienteRepository;
 
-    private UserRepository usuarioRepository;
 
     private final JwtService jwtService;
 

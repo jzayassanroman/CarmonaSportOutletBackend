@@ -20,6 +20,7 @@ public class ProductoResponseDTO {
     private String estado;
     private Boolean disponible;
     private String clientName;  // Nombre del cliente
+    private Integer idCliente;
 
     // Constructor que convierte Producto a ProductoResponseDTO
     public ProductoResponseDTO(Producto producto) {
@@ -37,6 +38,11 @@ public class ProductoResponseDTO {
         if (producto.getCliente() != null) {
             this.clientName = producto.getCliente().getNombre();  // Obtener el nombre del cliente
         }
+        if (producto.getCliente() !=null){
+            this.idCliente = producto.getCliente().getId();
+        }
+         // <-- aquí lo añades
+
     }
 
     // Getters and Setters

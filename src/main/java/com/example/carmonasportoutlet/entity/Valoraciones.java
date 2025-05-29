@@ -5,6 +5,7 @@ import com.example.carmonasportoutlet.entity.Producto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -24,9 +25,8 @@ public class Valoraciones {
     @Column(nullable = false, length = 100)
     private String valoracion;
 
-    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
-    private Date fecha;
+    private LocalDateTime fecha;
 
     @Column(nullable = false)
     private Integer estrellas;
@@ -39,5 +39,8 @@ public class Valoraciones {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
 
 }

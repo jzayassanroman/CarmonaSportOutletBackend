@@ -59,7 +59,9 @@ public class SecurityConfig {
                         .requestMatchers("/productos/**").permitAll()
                         .requestMatchers("/clientes/perfil").permitAll()
                         .requestMatchers("/pedidos/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers("/pedidos/historial/**").permitAll()
+                        .requestMatchers("/valoraciones/**").permitAll()
+                        .requestMatchers("/valoraciones/producto/**").permitAll())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling((exception) -> exception.accessDeniedHandler(accessDeniedHandler()));

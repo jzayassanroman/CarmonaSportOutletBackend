@@ -1,5 +1,6 @@
 package com.example.carmonasportoutlet.controladores;
 
+import com.example.carmonasportoutlet.dto.HistorialPedidoDTO;
 import com.example.carmonasportoutlet.dto.PedidoDTO;
 import com.example.carmonasportoutlet.entity.Pedido;
 import com.example.carmonasportoutlet.Servicio.PedidoService;
@@ -42,5 +43,10 @@ public class PedidoController {
     @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarPedido(@PathVariable Integer id) {
         return pedidoService.eliminarPedido(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+    @GetMapping("/historial/{idCliente}")
+    public ResponseEntity<List<HistorialPedidoDTO>> obtenerHistorial(@PathVariable Integer idCliente) {
+        List<HistorialPedidoDTO> historial = pedidoService.obtenerHistorialPorIdCliente(idCliente);
+        return ResponseEntity.ok(historial);
     }
 }
